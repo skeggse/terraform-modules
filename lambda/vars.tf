@@ -12,6 +12,7 @@ variable "memory_size" {
   default     = 256
 }
 
+# TODO: pull handler, runtime from object metadata
 variable "handler" {
   description = "The handler path for the Lambda runtime to invoke"
 }

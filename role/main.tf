@@ -2,7 +2,7 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 3"
+      version = "~> 4"
     }
   }
 
@@ -42,6 +42,10 @@ resource "aws_iam_policy" "policy" {
   name        = var.name
   description = "Policy for ${var.description}"
   policy      = var.policy
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "aws_iam_role" "role" {
@@ -53,6 +57,10 @@ resource "aws_iam_role" "role" {
 resource "aws_iam_role_policy_attachment" "attach" {
   role       = aws_iam_role.role.name
   policy_arn = aws_iam_policy.policy.arn
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 output "arn" {
