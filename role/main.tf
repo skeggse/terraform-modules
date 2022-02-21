@@ -26,7 +26,7 @@ data "aws_iam_policy_document" "assume_policy" {
       ]
 
       dynamic "condition" {
-        for_each = statement.value.conditions
+        for_each = coalesce(statement.value.conditions, [])
 
         content {
           test     = condition.value.test
