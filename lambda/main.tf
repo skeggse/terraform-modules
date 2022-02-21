@@ -88,6 +88,10 @@ output "function_arn" {
   value = aws_lambda_function.function.arn
 }
 
+output "function_qualifier" {
+  value = aws_lambda_alias.alias.name
+}
+
 output "invoke_arn" {
   value = aws_lambda_alias.alias.arn
 }
