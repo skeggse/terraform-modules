@@ -5,6 +5,8 @@ terraform {
       version = "~> 3"
     }
   }
+
+  experiments = [module_variable_optional_attrs]
 }
 
 data "aws_iam_policy_document" "assume_policy" {
