@@ -75,7 +75,8 @@ def upload_if_changed(s3, bucket: str, key: str, value: io.BytesIO) -> bool:
     try:
         metadata = s3.head_object(Bucket=bucket, Key=key)['Metadata']
     except s3.exceptions.ClientError as err:
-        if str(err.response['Error']['Code']) != '404':
+        # The 403 error can happen for deploy scripts running in low-privilege contexts, such as CI.
+        if str(err.response['Error']['Code']) not in ('403', '404'):
             raise
         metadata = {}
     prev_digest = next((v for k, v in metadata.items() if k.lower() == 'digest'), None)
