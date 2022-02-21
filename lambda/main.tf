@@ -20,7 +20,7 @@ locals {
 
 resource "aws_cloudwatch_log_group" "logs" {
   name              = "/aws/lambda/${var.name}"
-  retention_in_days = 30
+  retention_in_days = var.logs_retention_in_days
 }
 
 resource "aws_s3_object" "function_code" {
