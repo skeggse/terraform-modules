@@ -84,6 +84,10 @@ output "logs_arn" {
   value = aws_cloudwatch_log_group.logs.arn
 }
 
+output "function_name" {
+  value = aws_lambda_function.function.name
+}
+
 output "function_arn" {
   value = aws_lambda_function.function.arn
 }
