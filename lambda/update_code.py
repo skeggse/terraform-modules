@@ -70,7 +70,7 @@ def execa(*args):
 
 
 def upload_if_changed(s3, bucket: str, key: str, value: io.BytesIO) -> bool:
-    # This will fail of the object doesn't already exist. It should exist,
+    # This will fail if the object doesn't already exist. It should exist,
     # because Terraform should have created it.
     try:
         metadata = s3.head_object(Bucket=bucket, Key=key)['Metadata']
