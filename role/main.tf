@@ -6,7 +6,8 @@ terraform {
     }
   }
 
-  experiments = [module_variable_optional_attrs]
+  # To support optional variables.
+  required_version = ">= 1.3.0"
 }
 
 data "aws_iam_policy_document" "assume_policy" {
