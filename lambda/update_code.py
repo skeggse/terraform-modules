@@ -28,25 +28,28 @@ def npm(*args, **kwargs):
 
 def bundle_function(fn_dir: Path) -> io.BytesIO:
     print(f'bundling {fn_dir.name}')
-    sources = [fn_dir.glob('*.py'), fn_dir.glob('*.js')]
-    if (fn_dir / 'requirements.txt').is_file():
-        deps = fn_dir / 'site-packages'
-        shutil.rmtree(deps, ignore_errors=True)
-        makedirs(deps)
-        pip(
-            'install',
-            '-r',
-            'requirements.txt',
-            '--target',
-            'site-packages',
-            cwd=fn_dir,
-            check=True,
-        )
-        sources.append(deps.glob('**/*'))
-    if (fn_dir / 'package-lock.json').is_file():
-        deps = fn_dir / 'node_modules'
-        npm('ci', cwd=fn_dir, check=True)
-        sources.append(deps.glob('**/*'))
+    if (fn_dir / 'main').is_file():
+        sources = [(fn_dir / 'main',)]
+    else:
+        sources = [fn_dir.glob('*.py'), fn_dir.glob('*.js')]
+        if (fn_dir / 'requirements.txt').is_file():
+            deps = fn_dir / 'site-packages'
+            shutil.rmtree(deps, ignore_errors=True)
+            makedirs(deps)
+            pip(
+                'install',
+                '-r',
+                'requirements.txt',
+                '--target',
+                'site-packages',
+                cwd=fn_dir,
+                check=True,
+            )
+            sources.append(deps.glob('**/*'))
+        if (fn_dir / 'package-lock.json').is_file():
+            deps = fn_dir / 'node_modules'
+            npm('ci', cwd=fn_dir, check=True)
+            sources.append(deps.glob('**/*'))
 
     bio = io.BytesIO()
     with zipfile.ZipFile(bio, mode='w', compression=zipfile.ZIP_DEFLATED) as f:
