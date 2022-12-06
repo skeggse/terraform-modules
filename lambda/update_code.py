@@ -113,7 +113,7 @@ def upload_if_changed(s3, bucket: str, key: str, value: io.BytesIO) -> bool:
 
 
 def main(
-    source_dir: str, bucket: str, function: list[str], prefix: Optional[str], region: Optional[str]
+    source_dir: str, bucket: str, function: str, prefix: Optional[str], region: Optional[str]
 ):
     if region is None:
         s3 = boto3.client('s3', region_name='us-east-1')

@@ -25,7 +25,7 @@ resource "aws_cloudwatch_log_group" "logs" {
 
 resource "aws_s3_object" "function_code" {
   bucket = var.deploy_bucket
-  key    = "${var.name}.zip"
+  key    = coalesce(var.deploy_key, "${var.name}.zip")
   source = "${path.module}/empty.zip"
 
   metadata = {

@@ -31,6 +31,12 @@ variable "deploy_bucket" {
   description = "The bucket that hosts the function's code"
 }
 
+variable "deploy_key" {
+  description = "The key in the bucket that holds the function's code; defaults to <name>.zip"
+  default = null
+  type = string
+}
+
 variable "timeout" {
   description = "The function timeout, in seconds"
   default     = 10
